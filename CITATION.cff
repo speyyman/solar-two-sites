@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: If you use this study or its code, please cite the working paper.
 title: "How much of a solar forecast is skill? A two-site day-ahead study with public data"
 version: 1.0.0
+doi: 10.5281/zenodo.23604923
 date-released: 2026-10-23
 license: MIT
 repository-code: https://github.com/speyyman/solar-two-sites
@@ -21,8 +22,11 @@ preferred-citation:
   type: report
   title: "How much of a solar forecast is skill? A two-site day-ahead study with public data"
   status: preprint
-  notes: Working paper v1, not peer reviewed. Text and figures CC BY 4.0.
+  notes: Working paper v1.0, not peer reviewed. Text and figures CC BY 4.0.
   version: 1.0.0
+  doi: 10.5281/zenodo.23604923
+  publisher:
+    name: Zenodo
   year: 2026
   month: 10
   url: https://speyyman.github.io/research/solar-two-sites/

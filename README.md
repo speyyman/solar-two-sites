@@ -62,4 +62,8 @@ This is a new, independent study. It shares no code, data or analysis with the a
 
 Code: MIT ([`LICENSE`](LICENSE)). Paper text and figures: CC BY 4.0 ([`LICENSE-paper.md`](LICENSE-paper.md)). Data remain under their own licences ([`DATA.md`](DATA.md)). How to cite: [`CITATION.cff`](CITATION.cff).
 
+Archived on Zenodo with the paper: [doi:10.5281/zenodo.23604923](https://doi.org/10.5281/zenodo.23604923).
+
+> Peyman, S. (2026). *How much of a solar forecast is skill? A two-site day-ahead study with public data.* Working paper, version 1.0. Zenodo. https://doi.org/10.5281/zenodo.23604923
+
 The analysis code, data pipeline, figures and verification checks were written with Claude (Anthropic) under the author's direction.
