@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      reproduce:
+        description: Also download the data and rerun the whole pipeline
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+          cache: pip
+      - run: pip install -e .[dev]
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest
+
+  reproduce:
+    # Manual only: downloads about 30 MB from OEDI and Open-Meteo, then checks that
+    # every committed result file comes out byte for byte the same.
+    if: github.event_name == 'workflow_dispatch' && inputs.reproduce
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+          cache: pip
+      - run: pip install -e .
+      - run: python -m pipeline all
+      - name: Results match the committed ones
+        run: git diff --exit-code -- results paper/generated data/manifest.json

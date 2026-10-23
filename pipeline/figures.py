@@ -95,6 +95,7 @@ def style(t: Theme) -> None:
             "axes.axisbelow": True,
             "legend.frameon": False,
             "svg.fonttype": "path",
+            "svg.hashsalt": "solar-two-sites",  # stable ids, so reruns give identical SVG
             "pdf.fonttype": 42,
             "lines.linewidth": 1.6,
         }

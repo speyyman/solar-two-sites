@@ -1,8 +1,8 @@
 """Download every raw input and record a checksum for each file.
 
 Raw files go to data/raw/ (not committed). data/manifest.json (committed) holds
-the URL, byte size and SHA-256 of each file, so a rerun can prove it saw the
-same bytes. Weather requests are pinned to fixed dates, so they are repeatable
+the URL and a SHA-256 of each file's content, so a rerun can prove it saw the
+same data. Weather requests are pinned to fixed dates, so they are repeatable
 for as long as Open-Meteo keeps the archive unchanged.
 """
 
@@ -33,7 +33,18 @@ MANIFEST = DATA / "manifest.json"
 
 
 def sha256(path: Path) -> str:
+    """Checksum of the file's content.
+
+    Open-Meteo responses carry the server's `generationtime_ms`, which changes on every
+    request, so for JSON the checksum covers everything except that field.
+    """
     h = hashlib.sha256()
+    if path.suffix == ".json":
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(doc, dict):
+            doc.pop("generationtime_ms", None)
+        h.update(json.dumps(doc, sort_keys=True).encode("utf-8"))
+        return h.hexdigest()
     with path.open("rb") as f:
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
@@ -97,7 +108,7 @@ def fetch(force: bool = False) -> dict[str, dict[str, object]]:
             print(f"fetch {dest.relative_to(DATA)}")
             download(url, dest)
         rel = dest.relative_to(DATA).as_posix()
-        manifest[rel] = {"url": url, "bytes": dest.stat().st_size, "sha256": sha256(dest)}
+        manifest[rel] = {"url": url, "sha256": sha256(dest)}
     previous = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     changed = [k for k, v in manifest.items() if k in previous and previous[k] != v]
     for k in changed:

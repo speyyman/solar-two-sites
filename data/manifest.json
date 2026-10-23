@@ -1,72 +1,58 @@
 {
   "raw/arbuckle/2107_meter_15m_data_2024.csv": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/2107_OEDI/data/2107_meter_15m_data_2024.csv",
-    "bytes": 849109,
     "sha256": "bdef5026a5715f5a2b114580dd767a02bf35c4986bbffe496c4b89e85789eb98"
   },
   "raw/arbuckle/2107_meter_15m_data_2025.csv": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/2107_OEDI/data/2107_meter_15m_data_2025.csv",
-    "bytes": 1770717,
     "sha256": "20fe6e7124bcd65715e69df0d8f5776019632c776cbe39fecb0d65908d9b14ff"
   },
   "raw/arbuckle/2107_irradiance_data_2024.csv": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/2107_OEDI/data/2107_irradiance_data_2024.csv",
-    "bytes": 1933523,
     "sha256": "fd5acea27608b348b98d0e57d6e8a16f75031cfd6813f7a23caf15211caaec29"
   },
   "raw/arbuckle/2107_irradiance_15m_data_2025.csv": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/2107_OEDI/data/2107_irradiance_15m_data_2025.csv",
-    "bytes": 2818717,
     "sha256": "c32cb8948d13645b10c05322ad32f7b61195b9e08d0ef0d6b673cea105cd4544"
   },
   "raw/arbuckle/2107_system_metadata.json": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/2107_OEDI/metadata/2107_system_metadata.json",
-    "bytes": 64652,
-    "sha256": "17e4f7f448fcb2bec43f7610b40c1f7f4fc794ccc185e41dcde0514afba73ae5"
+    "sha256": "ebcb031f9788b8459e21c20a75360af0567b9268bae7c670c8f2578435ca8c3f"
   },
   "raw/arbuckle/nwp_gfs.json": {
     "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=38.996306&longitude=-122.134111&timezone=UTC&start_date=2024-01-01&end_date=2025-12-31&models=gfs_seamless&hourly=shortwave_radiation_previous_day1%2Cdirect_normal_irradiance_previous_day1%2Cdiffuse_radiation_previous_day1%2Ccloud_cover_previous_day1%2Ctemperature_2m_previous_day1%2Crelative_humidity_2m_previous_day1%2Cwind_speed_10m_previous_day1%2Cprecipitation_previous_day1",
-    "bytes": 945034,
-    "sha256": "956cf89e3960bd1ede9ca3f4f52c95f8a12d272ecc083dbe2d1d5220bd346578"
+    "sha256": "1436e00a35aa2095c8139eee3f7bc1439366b4b9b7b3c9f70b1c05ee25bdfb90"
   },
   "raw/arbuckle/nwp_ecmwf.json": {
     "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=38.996306&longitude=-122.134111&timezone=UTC&start_date=2024-01-01&end_date=2025-12-31&models=ecmwf_ifs025&hourly=shortwave_radiation_previous_day1%2Cdirect_normal_irradiance_previous_day1%2Cdiffuse_radiation_previous_day1%2Ccloud_cover_previous_day1%2Ctemperature_2m_previous_day1%2Crelative_humidity_2m_previous_day1%2Cwind_speed_10m_previous_day1%2Cprecipitation_previous_day1",
-    "bytes": 945060,
-    "sha256": "760c5cc51e57f1d988470172a8a7e6160243d1ddce97036bc428e50710df7680"
+    "sha256": "c918c0744e4b69a3f2b81b8f8e7eda8708bc35d2f2050774de04505ceb5d63cb"
   },
   "raw/arbuckle/era5.json": {
     "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.996306&longitude=-122.134111&timezone=UTC&start_date=2024-01-01&end_date=2025-12-31&models=era5&hourly=shortwave_radiation%2Cdirect_normal_irradiance%2Cdiffuse_radiation%2Ccloud_cover%2Ctemperature_2m%2Crelative_humidity_2m%2Cwind_speed_10m%2Cprecipitation",
-    "bytes": 933282,
-    "sha256": "6f15b6e0e0edbb99c7007bd4ea3833aacee07316f313125fc0aacf62c2a1423d"
+    "sha256": "96a06ad5a25ea4a0b2087c927b8ef7f9a153905a5c6b73c92e1c67bf9b1672cf"
   },
   "raw/kersey/9068_ac_power_data_20240101_20250430.csv": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/9068_OEDI/data/9068_ac_power_data_20240101_20250430.csv",
-    "bytes": 10870311,
     "sha256": "16cac9d3ec61027e6f176eea276dafd1ad6d46461336edb29a3772ad34b5efc2"
   },
   "raw/kersey/9068_irradiance_data_20240101_20250430.csv": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/9068_OEDI/data/9068_irradiance_data_20240101_20250430.csv",
-    "bytes": 6720619,
     "sha256": "f3817d240ec0f6c567cde5055a07009f8b64ba16186aed25b316bdc0b2a161ae"
   },
   "raw/kersey/9068_system_metadata.json": {
     "url": "https://oedi-data-lake.s3.amazonaws.com/pvdaq/2023-solar-data-prize/9068_OEDI/metadata/9068_system_metadata.json",
-    "bytes": 186092,
-    "sha256": "6861ae58145427dd790315257feef95b6ed5067fe5b5378dc5b2fa4acc23937f"
+    "sha256": "7d2137b65b7573bbefa45984824d41a583688d2bcedc272e22bee5e933f6d02e"
   },
   "raw/kersey/nwp_gfs.json": {
     "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=40.3864&longitude=-104.5512&timezone=UTC&start_date=2024-01-01&end_date=2025-12-31&models=gfs_seamless&hourly=shortwave_radiation_previous_day1%2Cdirect_normal_irradiance_previous_day1%2Cdiffuse_radiation_previous_day1%2Ccloud_cover_previous_day1%2Ctemperature_2m_previous_day1%2Crelative_humidity_2m_previous_day1%2Cwind_speed_10m_previous_day1%2Cprecipitation_previous_day1",
-    "bytes": 942602,
-    "sha256": "93f3711d1ce91d81835546a72d5eddf17113b172a0885905dc76180b51a6d5d5"
+    "sha256": "6d0fa7231ea02b2f3620aa224ba80d28dc8fa439732a545950356861d2af1d6c"
   },
   "raw/kersey/nwp_ecmwf.json": {
     "url": "https://previous-runs-api.open-meteo.com/v1/forecast?latitude=40.3864&longitude=-104.5512&timezone=UTC&start_date=2024-01-01&end_date=2025-12-31&models=ecmwf_ifs025&hourly=shortwave_radiation_previous_day1%2Cdirect_normal_irradiance_previous_day1%2Cdiffuse_radiation_previous_day1%2Ccloud_cover_previous_day1%2Ctemperature_2m_previous_day1%2Crelative_humidity_2m_previous_day1%2Cwind_speed_10m_previous_day1%2Cprecipitation_previous_day1",
-    "bytes": 944907,
-    "sha256": "ae57760ae32613a4c8c9cf6b26e78025c78a9236c87b0a946fd468f6df22a7a1"
+    "sha256": "21b037ffe723e1367b1d0e0ba6cffab895f157ba056d5c7e60c9678d5e78a40b"
   },
   "raw/kersey/era5.json": {
     "url": "https://archive-api.open-meteo.com/v1/archive?latitude=40.3864&longitude=-104.5512&timezone=UTC&start_date=2024-01-01&end_date=2025-12-31&models=era5&hourly=shortwave_radiation%2Cdirect_normal_irradiance%2Cdiffuse_radiation%2Ccloud_cover%2Ctemperature_2m%2Crelative_humidity_2m%2Cwind_speed_10m%2Cprecipitation",
-    "bytes": 938816,
-    "sha256": "edfb6da1ae2c57f49b56a2adcb9f2f56b053d0825e25dfbf159d8ff2ce685a85"
+    "sha256": "ea9d62129eba73e9729ff8aec544c0161ce91d22e18dc64485eef8cec16edde9"
   }
 }
