@@ -46,6 +46,8 @@ The full run takes a few minutes. It rewrites `results/`, `figures/` and `paper/
 | `figures` | `pipeline/figures.py` | Paper figures (`figures/*.pdf`, `*.png`) and site figures (`figures/site/*.svg`) |
 | `report` | `pipeline/report.py` | Every number in the paper as a LaTeX macro (`paper/generated/numbers.tex`), tables, and `results/summary.json` |
 
+`scripts/check_numbers.py <file>...` lists every number in a piece of writing that is not a value in `results/summary.json`; it was run on the site's paper page and essay, and what it lists there are dates, plant IDs and definitions.
+
 Leakage guard: every table the pipeline builds is checked so that persistence inputs come only from strictly earlier days, and a synthetic end-to-end test plants a leak and confirms it is caught.
 
 Data sources, licences and the exact queries are in [`DATA.md`](DATA.md).
