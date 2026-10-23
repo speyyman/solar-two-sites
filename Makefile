@@ -11,7 +11,8 @@ fetch clean run failures figures report:
 	$(PY) -m pipeline $@
 
 paper:
-	cd paper && $(TECTONIC) main.tex
+	cd paper && $(TECTONIC) --outdir build main.tex
+	cp paper/build/main.pdf paper/solar-two-sites-v1.pdf
 
 test:
 	$(PY) -m pytest

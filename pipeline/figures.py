@@ -218,7 +218,7 @@ CASES = (
     ("arbuckle", "2024-10-17", "2024-10-19", "No output under a clear sky"),
     ("kersey", "2024-09-11", "2024-09-14", "One of two inverters off"),
     ("arbuckle", "2025-12-05", "2025-12-09", "Still December days"),
-    ("kersey", "2024-08-08", "2024-08-10", "Storm days"),
+    ("kersey", "2024-08-08", "2024-08-10", "Heavy cloud, then cloud no source saw"),
 )
 
 

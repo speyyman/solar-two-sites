@@ -168,6 +168,37 @@ def categorise(r: pd.Series) -> str:
     return "under-forecast, no clear cause"
 
 
+def category_profile(d: pd.DataFrame) -> dict[str, dict[str, object]]:
+    """Per category: day count, mean clearness indices, and days per month."""
+    out: dict[str, dict[str, object]] = {}
+    for cat, g in d.groupby("category"):
+        out[str(cat)] = {
+            "days": len(g),
+            "k_obs_mean": float(g["k_obs"].mean()),
+            "k_nwp_mean": float(g["k_nwp"].mean()),
+            "k_era5_mean": float(g["k_era5"].mean()),
+            "months": {
+                str(k): int(v)
+                for k, v in g.index.to_period("M").value_counts().sort_index().items()
+            },
+        }
+    return out
+
+
+PF_CHANGE = "2025-03-01"
+
+
+def power_factor_periods() -> dict[str, float]:
+    """Median of Kersey's daily power factor before and from March 2025."""
+    pf = kersey_power_factor()
+    pf = pf[pf.index >= pd.Timestamp("2024-07-01")]
+    cut = pd.Timestamp(PF_CHANGE)
+    return {
+        "before_2025_03": float(pf[pf.index < cut].median()),
+        "from_2025_03": float(pf[pf.index >= cut].median()),
+    }
+
+
 def run() -> None:
     out: dict = {"worst_n": WORST_N, "gap": GAP, "sunny": SUNNY, "sites": {}}
     frames = []
@@ -206,6 +237,7 @@ def run() -> None:
             .value_counts()
             .to_dict(),
             "days_abs_err_gt_1h": int((d["err"].abs() > 1.0).sum()),
+            "categories_gt_1h": category_profile(d[d["err"].abs() > 1.0]),
             "worst": [
                 {
                     "day": str(i.date()),
@@ -222,6 +254,8 @@ def run() -> None:
                 for i, r in worst.iterrows()
             ],
         }
+        if key == "kersey":
+            out["sites"][key]["power_factor_median"] = power_factor_periods()
         print(f"{key}: worst {WORST_N} days")
         cols = [
             "err",
