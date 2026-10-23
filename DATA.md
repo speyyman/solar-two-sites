@@ -1,6 +1,6 @@
 # Data
 
-Every input is public and downloaded by `python -m pipeline fetch`. Raw files go to `data/raw/` and are not committed; `data/manifest.json` (committed) holds the exact URL of every request and a SHA-256 of every file, and the fetch step fails if a download does not match. All sources were accessed on 2026-10-23.
+Every input is public and downloaded by `python -m pipeline fetch`. Raw files go to `data/raw/` and are not committed; `data/manifest.json` (committed) holds the exact URL of every request and a SHA-256 of every file, and the fetch step stops if a file does not match (set `UPDATE_MANIFEST=1` to accept changed data on purpose; `git diff data/manifest.json` then shows what changed). All sources were accessed on 2026-10-23.
 
 The repository redistributes no raw data. It does contain derived results (scores, daily errors, the cleaning ledger, figures), which the licences below allow with attribution.
 

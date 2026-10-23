@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import time
 from pathlib import Path
 from urllib.parse import urlencode
@@ -30,6 +31,7 @@ from pipeline.config import (
 )
 
 MANIFEST = DATA / "manifest.json"
+NL = "\n"
 
 
 def sha256(path: Path) -> str:
@@ -101,7 +103,16 @@ def plan() -> list[tuple[str, Path]]:
     return items
 
 
-def fetch(force: bool = False) -> dict[str, dict[str, object]]:
+def fetch(force: bool = False, update: bool | None = None) -> dict[str, dict[str, object]]:
+    """Download what is missing and check every file against the committed manifest.
+
+    A file whose checksum (or URL) differs from the manifest stops the run, because every
+    result downstream would silently change. To accept new data on purpose, set the
+    environment variable UPDATE_MANIFEST=1; the manifest is then rewritten and
+    `git diff data/manifest.json` shows what changed.
+    """
+    if update is None:
+        update = os.environ.get("UPDATE_MANIFEST") == "1"
     manifest: dict[str, dict[str, object]] = {}
     for url, dest in plan():
         if force or not dest.exists():
@@ -111,7 +122,14 @@ def fetch(force: bool = False) -> dict[str, dict[str, object]]:
         manifest[rel] = {"url": url, "sha256": sha256(dest)}
     previous = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     changed = [k for k, v in manifest.items() if k in previous and previous[k] != v]
+    if changed and not update:
+        raise SystemExit(
+            "these inputs differ from data/manifest.json: "
+            + ", ".join(changed)
+            + NL
+            + "rerun with UPDATE_MANIFEST=1 to accept them"
+        )
     for k in changed:
-        print(f"note: {k} differs from the committed manifest")
-    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", newline="\n")
+        print(f"updated manifest entry: {k}")
+    MANIFEST.write_text(json.dumps(manifest, indent=2) + NL, newline=NL)
     return manifest

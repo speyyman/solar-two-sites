@@ -162,6 +162,12 @@ def build_macros(m: dict, fails: dict, led: pd.DataFrame) -> Macros:
             pf = fs["power_factor_median"]
             mac.add(f"{a}PfEarly", f"{pf['before_2025_03']:.2f}")
             mac.add(f"{a}PfLate", f"{pf['from_2025_03']:.2f}")
+        if "pf_clear_days" in fs:
+            c = fs["pf_clear_days"]
+            mac.add(f"{a}PfClearDaysBefore", str(c["clear_days_before"]))
+            mac.add(f"{a}PfClearDaysFrom", str(c["clear_days_from"]))
+            mac.add(f"{a}PfClearKobsBefore", f"{c['k_obs_median_before']:.2f}")
+            mac.add(f"{a}PfClearKobsFrom", f"{c['k_obs_median_from']:.2f}")
         rows = led[(led["site"] == key) & led["stage"].isin(["power", "features"])]
 
         def count(rule_start: str, rows: pd.DataFrame = rows) -> int:

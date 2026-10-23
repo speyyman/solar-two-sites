@@ -552,35 +552,35 @@
     "kersey": {
       "days": 298,
       "without_plant_anomaly_days": {
-        "days_removed": 23,
-        "hours": 2849,
+        "days_removed": 21,
+        "hours": 2867,
         "smart_persistence": {
-          "nrmse": 0.2309402396978296,
+          "nrmse": 0.2308018975335047,
           "skill": 0.0,
           "skill_ci95": null
         },
         "physical_cal/gfs": {
-          "nrmse": 0.16929115044200704,
-          "skill": 0.2669482344717681,
+          "nrmse": 0.17155500156905734,
+          "skill": 0.2567002117296141,
           "skill_ci95": [
-            0.1937317728406628,
-            0.33327306107796273
+            0.18204052110493038,
+            0.32205790073562557
           ]
         },
         "gbm/gfs": {
-          "nrmse": 0.17167142535112298,
-          "skill": 0.2566413476675006,
+          "nrmse": 0.1731507469726815,
+          "skill": 0.24978629368700989,
           "skill_ci95": [
-            0.18990912472567967,
-            0.3154961754141508
+            0.18627064514883387,
+            0.30554432153620653
           ]
         },
         "gbm/era5": {
-          "nrmse": 0.14847546222490843,
-          "skill": 0.3570827569107099,
+          "nrmse": 0.14902213585289398,
+          "skill": 0.35432880992124005,
           "skill_ci95": [
-            0.2944169952369762,
-            0.4143581795078554
+            0.29310727651779667,
+            0.41066229445873226
           ]
         }
       },
@@ -602,10 +602,8 @@
         "2025-01-14",
         "2025-02-17",
         "2025-02-18",
-        "2025-02-19",
         "2025-03-11",
         "2025-03-24",
-        "2025-04-01",
         "2025-04-12",
         "2025-04-27"
       ],
@@ -615,33 +613,31 @@
         "one inverter offline": 5,
         "under-forecast, no clear cause": 3,
         "over-forecast, no clear cause": 2,
+        "forecast missed cloud": 2,
         "forecast missed sun": 2,
-        "reactive-power limit": 1,
-        "cloud neither source saw": 1,
-        "forecast missed cloud": 1
+        "cloud neither source saw": 1
       },
       "all_days_categories_abs_err_gt_1h": {
         "under-forecast, no clear cause": 38,
         "cloud neither source saw": 21,
         "one inverter offline": 9,
         "over-forecast, no clear cause": 8,
-        "forecast missed cloud": 4,
+        "forecast missed cloud": 5,
+        "clear dry sky, low output": 5,
         "forecast missed sun": 4,
-        "clear dry sky, low output": 4,
-        "reactive-power limit": 2,
         "snow likely": 1
       },
       "days_abs_err_gt_1h": 91,
       "categories_gt_1h": {
         "clear dry sky, low output": {
-          "days": 4,
-          "k_obs_mean": 0.5876744340276043,
-          "k_nwp_mean": 0.9926530191918361,
-          "k_era5_mean": 0.9518780589710174,
+          "days": 5,
+          "k_obs_mean": 0.5765936077559504,
+          "k_nwp_mean": 0.9980893715125696,
+          "k_era5_mean": 0.9497234319756116,
           "months": {
             "2024-11": 1,
             "2024-12": 1,
-            "2025-03": 1,
+            "2025-03": 2,
             "2025-04": 1
           }
         },
@@ -663,14 +659,15 @@
           }
         },
         "forecast missed cloud": {
-          "days": 4,
-          "k_obs_mean": 0.3738313749016175,
-          "k_nwp_mean": 0.8584213858409814,
-          "k_era5_mean": 0.5088443656294128,
+          "days": 5,
+          "k_obs_mean": 0.3595331256875026,
+          "k_nwp_mean": 0.8898646093313509,
+          "k_era5_mean": 0.5525341572821307,
           "months": {
             "2024-07": 1,
             "2024-12": 2,
-            "2025-02": 1
+            "2025-02": 1,
+            "2025-04": 1
           }
         },
         "forecast missed sun": {
@@ -704,16 +701,6 @@
             "2024-08": 2,
             "2024-10": 2,
             "2024-11": 1
-          }
-        },
-        "reactive-power limit": {
-          "days": 2,
-          "k_obs_mean": 0.4173052157501887,
-          "k_nwp_mean": 1.0177361420441664,
-          "k_era5_mean": 0.8341991239434949,
-          "months": {
-            "2025-03": 1,
-            "2025-04": 1
           }
         },
         "snow likely": {
@@ -826,7 +813,7 @@
           "power_factor": 0.53,
           "inverter_down": 0.0,
           "poa_kwh_m2": 2.7208699999999997,
-          "category": "reactive-power limit"
+          "category": "forecast missed cloud"
         },
         {
           "day": "2024-09-14",
@@ -1063,6 +1050,12 @@
       "power_factor_median": {
         "before_2025_03": 1.0,
         "from_2025_03": 0.8599999999999999
+      },
+      "pf_clear_days": {
+        "clear_days_before": 159,
+        "clear_days_from": 34,
+        "k_obs_median_before": 0.9601859785695529,
+        "k_obs_median_from": 0.9255313944297215
       }
     }
   }

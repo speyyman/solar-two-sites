@@ -1,13 +1,14 @@
-"""Where the primary forecast failed, and why, by rules fixed before the cases were read.
+"""Where the primary forecast failed, and why, by stated rules (see `categorise` for their history).
 
 For every scored day: the daily energy error of the primary model (GBM on GFS
 day-ahead inputs), and three daily clearness indices on the same clear-sky base:
   k_obs   measured energy / clear-sky model energy (what the plant saw)
   k_nwp   day-ahead forecast GHI / clear-sky GHI (what the forecaster was told)
   k_era5  reanalysis GHI / clear-sky GHI (a later, independent estimate of the sky)
-The worst days (largest absolute daily error) are sorted with the rules in
-`categorise`. The rules use only these indices, ERA5 frozen precipitation and the
-plant's power factor; the thresholds are round numbers, not tuned.
+Days with a large error are sorted with the rules in `categorise`. The rules use
+only these indices, ERA5 minimum humidity, mean wind and frozen precipitation, the
+month, and (Kersey) whether one inverter was down; the thresholds are round
+numbers, not tuned.
 """
 
 from __future__ import annotations
@@ -66,12 +67,6 @@ def plant_anomaly(d: pd.DataFrame) -> pd.Series:
     flag = no_output | clear_dry
     if "inverter_down" in d:
         flag |= d["inverter_down"].fillna(False).astype(bool)
-    if "power_factor" in d:
-        flag |= (
-            (d["power_factor"] < 0.95)
-            & (d["k_era5"] >= SUNNY)
-            & (d["k_obs"] < d["k_era5"] - 2 * GAP)
-        )
     return flag
 
 
@@ -125,20 +120,21 @@ def daily_table(site: Site, pred: pd.DataFrame) -> pd.DataFrame:
 
 
 def categorise(r: pd.Series) -> str:
-    """Rules, version 2. Version 1 (git history) had one 'plant' bin for every day the
-    plant fell far below a sky ERA5 called sunny; reading the cases showed two different
-    things in it, still winter days and dry clear summer days, so they are split out."""
+    """Rules, version 3.
+
+    Version 1 (written before the cases were read, not preserved in git) had one
+    'plant' bin for every day the plant fell far below a sky ERA5 called sunny; reading
+    the cases showed two different things in it, still winter days and dry clear summer
+    days, so version 2 split them. Version 2 also had a 'reactive-power limit' bin
+    (Kersey power factor below 0.95 on a sunny, low-output day). An independent review
+    showed it was confounded: from March 2025 the power factor sits near 0.86 whenever
+    the plant produces, falls further on cloudy days, and clear days in that period
+    still reach full clear-sky energy (see `pf_clear_days`). Version 3 drops it."""
     if r["err"] > 0:
         if r["k_obs"] < NO_OUTPUT and r["k_era5"] >= SUNNY:
             return "no output at all under a sunny sky"
         if bool(r.get("inverter_down", False)):
             return "one inverter offline"
-        if (
-            r.get("power_factor", 1.0) < 0.95
-            and r["k_era5"] >= SUNNY
-            and r["k_obs"] < r["k_era5"] - 2 * GAP
-        ):
-            return "reactive-power limit"
         low = r["k_era5"] >= SUNNY and r["k_obs"] < r["k_era5"] - 2 * GAP
         if r["frozen_era5_72h"] >= 1.0 and low:
             return "snow likely"
@@ -199,6 +195,22 @@ def power_factor_periods() -> dict[str, float]:
     }
 
 
+def pf_clear_days(d: pd.DataFrame) -> dict[str, float | int]:
+    """Kersey: does the March 2025 power-factor change cost energy on clear days?
+
+    Median plant clearness on days the reanalysis calls clear, before and from the change.
+    """
+    clear = d[d["k_era5"] >= CLEAR]
+    cut = pd.Timestamp(PF_CHANGE)
+    before, after = clear[clear.index < cut], clear[clear.index >= cut]
+    return {
+        "clear_days_before": len(before),
+        "clear_days_from": len(after),
+        "k_obs_median_before": float(before["k_obs"].median()),
+        "k_obs_median_from": float(after["k_obs"].median()),
+    }
+
+
 def run() -> None:
     out: dict = {"worst_n": WORST_N, "gap": GAP, "sunny": SUNNY, "sites": {}}
     frames = []
@@ -256,6 +268,7 @@ def run() -> None:
         }
         if key == "kersey":
             out["sites"][key]["power_factor_median"] = power_factor_periods()
+            out["sites"][key]["pf_clear_days"] = pf_clear_days(d)
         print(f"{key}: worst {WORST_N} days")
         cols = [
             "err",

@@ -19,11 +19,11 @@ Two public plants from NREL's PVDAQ archive (a 893 kW fixed array in Arbuckle, C
 | Boosted trees trained on the other site (skill) | +0.10 | +0.16 |
 | 80% interval coverage | 59% | 65% |
 
-A physical model with two fitted numbers does most of the work; at Kersey the trees add nothing measurable over it. Perfect weather would not help much. A model from the other plant keeps less than half the gain at Arbuckle. The intervals are too narrow. Read one by one, the worst days are mostly the plants, not the sky: zero output on clear days, an inverter off for a week, a reactive-power setting, a summer of clear dry days at reduced output.
+A physical model with two fitted numbers does most of the work; at Kersey the trees add nothing measurable over it. Hindsight weather from the reanalysis would help Kersey somewhat and Arbuckle hardly at all. A model from the other plant keeps less than half the gain at Arbuckle. The intervals are too narrow. Read one by one, many of the largest misses are not weather-forecast errors at all: zero output on clear days, an inverter off for a week, a summer of clear dry days at reduced output.
 
 ## Quick start
 
-Python 3.11 or newer (developed on 3.14).
+Python 3.12 or newer (developed on 3.14).
 
 ```sh
 python -m venv .venv
@@ -39,7 +39,7 @@ The full run takes a few minutes. It rewrites `results/`, `figures/` and `paper/
 
 | Step | Module | Does |
 |---|---|---|
-| `fetch` | `pipeline/fetch.py` | Downloads the PVDAQ files and the Open-Meteo responses, checks each against the SHA-256 in `data/manifest.json` |
+| `fetch` | `pipeline/fetch.py` | Downloads the PVDAQ files and the Open-Meteo responses; stops if any differs from the SHA-256 in `data/manifest.json` (set `UPDATE_MANIFEST=1` to accept new data on purpose) |
 | `clean` | `pipeline/clean.py` | Converts every clock to UTC, checks it against solar noon, applies the cleaning rules, hourly means; writes the ledger of every value dropped, shifted or filled (`results/ledger_clean.csv`) |
 | `run` | `pipeline/evaluate.py`, `features.py`, `physical.py`, `models.py` | Builds features available at issue time (end of D-1), runs persistence, smart persistence, the pvlib physical model, its calibrated version, LightGBM point and quantile models and the cross-site transfer, month by month; block bootstrap; `results/metrics.json` |
 | `failures` | `pipeline/failures.py` | Daily errors, clearness indices from the plant, the forecast and ERA5; sorts large misses by fixed rules; plant-anomaly sensitivity check |
@@ -54,7 +54,7 @@ Data sources, licences and the exact queries are in [`DATA.md`](DATA.md).
 
 ## Limitations
 
-Two plants, neither a cloudy humid site. Kersey has 16 months, ten of them scored. The first test month has six months of training history. Weather is hourly at one grid point. Plant faults are inferred from power, power factor and weather; without maintenance logs the failure categories are descriptions, not diagnoses. Hyperparameters were fixed in advance, not tuned. The Open-Meteo archive is a third-party record of past runs; the checksums would show a change but cannot prevent one. Details are in the paper.
+Two plants, neither a cloudy humid site. Kersey has 16 months, ten of them scored. The first test month has about five and a half months of training history. Weather is hourly at one grid point. Plant faults are inferred from power, power factor and weather; without maintenance logs the failure categories are descriptions, not diagnoses. Hyperparameters were fixed in advance, not tuned. The Open-Meteo archive is a third-party record of past runs; the checksums would show a change but cannot prevent one. Details are in the paper.
 
 This is a new, independent study. It shares no code, data or analysis with the author's earlier team capstone on solar yield.
 
