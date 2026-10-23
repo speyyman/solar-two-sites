@@ -366,7 +366,7 @@
           "sq_err": 1.2990301879949122,
           "abs_err_hours": 2.9001050541358606,
           "err": 2.870191515258459,
-          "poa_kwh_m2": 4.832916666666667,
+          "poa_kwh_m2": 3.7646833333333336,
           "category": "over-forecast, no clear cause"
         },
         {

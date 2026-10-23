@@ -142,7 +142,7 @@ def build_macros(m: dict, fails: dict, led: pd.DataFrame) -> Macros:
             ("under-forecast, no clear cause", "UnderNone"),
         ):
             mac.add(f"{a}Cat{code}", str(cats.get(cat, 0)))
-        rows = led[led["site"] == key]
+        rows = led[(led["site"] == key) & led["stage"].isin(["power", "features"])]
 
         def count(rule_start: str, rows: pd.DataFrame = rows) -> int:
             r = rows[rows["rule"].str.startswith(rule_start)]

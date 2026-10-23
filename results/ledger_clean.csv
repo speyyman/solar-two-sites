@@ -10,10 +10,10 @@ arbuckle,power,above 105% of maximum AC output; dropped,0,samples,limit 756 kW
 arbuckle,power,identical non-zero value for 60 min or more; dropped,153,samples,
 arbuckle,power,hour with under 75% of its samples; set missing,32,hours,
 arbuckle,poa,clock shifted to match solar noon,73077,samples,median residual +0.16 h; shifted by -1 days +23:50:00
-arbuckle,poa,month whose clock disagrees with the sun by more than 0.75 h; dropped,2898,samples,2024-12: residual +7.65 h
-arbuckle,poa,month whose clock disagrees with the sun by more than 0.75 h; dropped,2893,samples,2025-12: residual +7.67 h
-arbuckle,poa,overlapping timestamps across files; first file kept,54253,samples,50112 differ
-arbuckle,poa,hour with under 75% of its samples; set missing,9001,hours,
+arbuckle,poa,clock shifted to match solar noon,105787,samples,median residual +7.73 h; shifted by -1 days +16:15:00
+arbuckle,poa,month whose clock disagrees with the sun by more than 0.75 h; dropped,6736,samples,2024-02: residual -8.21 h
+arbuckle,poa,overlapping timestamps across files; first file kept,52524,samples,39990 differ
+arbuckle,poa,hour with under 75% of its samples; set missing,10973,hours,
 kersey,power,raw samples read,135791,samples,9068_ac_power_data_20240101_20250430.csv
 kersey,power,sample missing in source,1458,samples,9068_ac_power_data_20240101_20250430.csv
 kersey,power,timestamp ambiguous or nonexistent in local clock; dropped,12,samples,America/Denver

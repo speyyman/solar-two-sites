@@ -146,7 +146,7 @@
   "ArbCatUnderNone": "41",
   "ArbLedStuck": "153",
   "ArbLedNeg": "0",
-  "ArbLedThin": "9,033",
+  "ArbLedThin": "32",
   "ArbLedAmbig": "12",
   "ArbLedPersistFill": "52",
   "ArbLedSmartFill": "31",
@@ -297,8 +297,8 @@
   "KerCatUnderNone": "38",
   "KerLedStuck": "0",
   "KerLedNeg": "1,561",
-  "KerLedThin": "84",
-  "KerLedAmbig": "19",
+  "KerLedThin": "52",
+  "KerLedAmbig": "12",
   "KerLedPersistFill": "351",
   "KerLedSmartFill": "36"
 }
