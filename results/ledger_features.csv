@@ -1,0 +1,5 @@
+site,stage,rule,count,unit,detail
+arbuckle,features,"smart persistence: D-1 incomplete, ratio taken from an older day",31,days,
+arbuckle,features,"persistence: D-1 missing, filled from an older day (up to 7)",52,day-hours,
+kersey,features,"smart persistence: D-1 incomplete, ratio taken from an older day",36,days,
+kersey,features,"persistence: D-1 missing, filled from an older day (up to 7)",351,day-hours,

@@ -66,7 +66,8 @@ class Site:
     longitude: float
     elevation_m: float
     dc_kw: float
-    ac_kw: float
+    ac_kw: float  # nominal AC rating; errors are normalised by this
+    ac_max_kw: float  # most the inverters can deliver; the physical model clips here
     tracking: bool
     tilt: float
     azimuth: float
@@ -92,8 +93,10 @@ SITES: dict[str, Site] = {
         elevation_m=10.0,
         # 2880 Hyundai HiS-M310TI modules (310 W) = 892.8 kW DC; metadata says 893.
         dc_kw=893.0,
-        # 24 ABB TRIO-27.6-TL-OUTD inverters x 27.6 kW.
+        # 24 ABB TRIO-27.6-TL-OUTD inverters: 27.6 kW nominal, 30 kW maximum output
+        # (ABB datasheet 9AKK106103A4856; see DATA.md).
         ac_kw=24 * 27.6,
+        ac_max_kw=24 * 30.0,
         tracking=False,
         tilt=25.0,
         azimuth=180.0,
@@ -131,6 +134,7 @@ SITES: dict[str, Site] = {
         dc_kw=4738.0,
         # Two inverters, 1910 kW AC each, per the metadata.
         ac_kw=2 * 1910.0,
+        ac_max_kw=2 * 1910.0,
         tracking=True,
         tilt=0.0,
         azimuth=180.0,

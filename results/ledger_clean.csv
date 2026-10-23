@@ -1,0 +1,27 @@
+site,stage,rule,count,unit,detail
+arbuckle,power,raw samples read,32155,samples,2107_meter_15m_data_2024.csv
+arbuckle,power,timestamp ambiguous or nonexistent in local clock; dropped,4,samples,America/Los_Angeles
+arbuckle,power,raw samples read,67191,samples,2107_meter_15m_data_2025.csv
+arbuckle,power,timestamp ambiguous or nonexistent in local clock; dropped,8,samples,America/Los_Angeles
+arbuckle,power,overlapping timestamps across files; first file kept,29175,samples,0 differ
+arbuckle,power,clock shifted to match solar noon,70159,samples,median residual -0.19 h; shifted by 0 days 00:15:00
+arbuckle,power,negative power (night tare) set to 0,0,samples,
+arbuckle,power,above 105% of maximum AC output; dropped,0,samples,limit 756 kW
+arbuckle,power,identical non-zero value for 60 min or more; dropped,153,samples,
+arbuckle,power,hour with under 75% of its samples; set missing,32,hours,
+arbuckle,poa,clock shifted to match solar noon,73077,samples,median residual +0.16 h; shifted by -1 days +23:50:00
+arbuckle,poa,month whose clock disagrees with the sun by more than 0.75 h; dropped,2898,samples,2024-12: residual +7.65 h
+arbuckle,poa,month whose clock disagrees with the sun by more than 0.75 h; dropped,2893,samples,2025-12: residual +7.67 h
+arbuckle,poa,overlapping timestamps across files; first file kept,54253,samples,50112 differ
+arbuckle,poa,hour with under 75% of its samples; set missing,9001,hours,
+kersey,power,raw samples read,135791,samples,9068_ac_power_data_20240101_20250430.csv
+kersey,power,sample missing in source,1458,samples,9068_ac_power_data_20240101_20250430.csv
+kersey,power,timestamp ambiguous or nonexistent in local clock; dropped,12,samples,America/Denver
+kersey,power,negative power (night tare) set to 0,1561,samples,
+kersey,power,above 105% of maximum AC output; dropped,0,samples,limit 4011 kW
+kersey,power,identical non-zero value for 60 min or more; dropped,0,samples,
+kersey,power,hour with under 75% of its samples; set missing,52,hours,
+kersey,poa,timestamp ambiguous or nonexistent in local clock; dropped,7,samples,America/Denver
+kersey,poa,clock shifted to match solar noon,137153,samples,median residual -0.04 h; shifted by 0 days 00:05:00
+kersey,poa,month whose clock disagrees with the sun by more than 0.75 h; dropped,8791,samples,2024-07: residual -1.35 h
+kersey,poa,hour with under 75% of its samples; set missing,32,hours,
