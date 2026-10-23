@@ -101,7 +101,11 @@ def clock_residuals(s: pd.Series, longitude: float, frac: float = 0.05) -> pd.Se
     # days that reach 30% of it count, so night-time noise on dull days cannot set them.
     level = float(solar.quantile(0.995))
     peak = solar.groupby(solar.index.normalize()).transform("max")
-    on = solar[(solar > frac * level) & (peak > 0.3 * level)]
+    # A day counts only if it starts and ends in darkness, so a record that begins or
+    # ends mid-day (or a gap) cannot fake a midpoint.
+    day = solar.groupby(solar.index.normalize())
+    dark_ends = (day.transform("first") < frac * level) & (day.transform("last") < frac * level)
+    on = solar[(solar > frac * level) & (peak > 0.3 * level) & dark_ends]
     g = on.groupby(on.index.normalize())
     first, last, n = g.apply(lambda x: x.index.min()), g.apply(lambda x: x.index.max()), g.size()
     mid = first + (last - first) / 2
