@@ -62,4 +62,4 @@ This is a new, independent study. It shares no code, data or analysis with the a
 
 Code: MIT ([`LICENSE`](LICENSE)). Paper text and figures: CC BY 4.0 ([`LICENSE-paper.md`](LICENSE-paper.md)). Data remain under their own licences ([`DATA.md`](DATA.md)). How to cite: [`CITATION.cff`](CITATION.cff).
 
-The analysis code and drafting were done with Claude (Anthropic) under the author's direction.
+The analysis code, data pipeline, figures and verification checks were written with Claude (Anthropic) under the author's direction.
