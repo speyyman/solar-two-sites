@@ -236,5 +236,5 @@ def run() -> None:
         ]
         print(worst[cols].round(2).to_string())
         print(out["sites"][key]["all_days_categories_abs_err_gt_1h"])
-    pd.concat(frames).to_csv(RESULTS / "daily_errors.csv")
-    (RESULTS / "failures.json").write_text(json.dumps(out, indent=2) + "\n")
+    pd.concat(frames).to_csv(RESULTS / "daily_errors.csv", lineterminator="\n")
+    (RESULTS / "failures.json").write_text(json.dumps(out, indent=2) + "\n", newline="\n")

@@ -102,5 +102,5 @@ def fetch(force: bool = False) -> dict[str, dict[str, object]]:
     changed = [k for k, v in manifest.items() if k in previous and previous[k] != v]
     for k in changed:
         print(f"note: {k} differs from the committed manifest")
-    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
+    MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", newline="\n")
     return manifest

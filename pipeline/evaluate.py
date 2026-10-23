@@ -219,7 +219,7 @@ def run_all() -> None:
         led = Ledger(key)
         tables[key] = {src: build(site, src, led) for src in SOURCES}
         ledgers.append(led.frame())
-    pd.concat(ledgers).to_csv(RESULTS / "ledger_features.csv", index=False)
+    pd.concat(ledgers).to_csv(RESULTS / "ledger_features.csv", index=False, lineterminator="\n")
     keys = list(SITES)
     summary: dict = {"primary_nwp": PRIMARY_NWP, "reference": REF, "sites": {}}
     for i, key in enumerate(keys):
@@ -246,4 +246,4 @@ def run_all() -> None:
                 f"  quantiles {src}: pinball {q['pinball']:.4f} "
                 f"coverage {q['coverage_80']:.3f} width {q['width_80']:.3f}"
             )
-    (RESULTS / "metrics.json").write_text(json.dumps(summary, indent=2) + "\n")
+    (RESULTS / "metrics.json").write_text(json.dumps(summary, indent=2) + "\n", newline="\n")

@@ -276,5 +276,5 @@ def clean_all() -> None:
     RESULTS.mkdir(parents=True, exist_ok=True)
     frames = [clean_site(s) for s in SITES.values()]
     led = pd.concat(frames, ignore_index=True)
-    led.to_csv(RESULTS / "ledger_clean.csv", index=False)
+    led.to_csv(RESULTS / "ledger_clean.csv", index=False, lineterminator="\n")
     print(led.to_string())
