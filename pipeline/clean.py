@@ -8,8 +8,8 @@ Rules, in order, for each power file:
    above 5% of the daily peak should sit at solar noon. Any whole-step residual is
    removed by shifting the series, and the shift is written to the ledger.
 3. Negative power (night-time tare) becomes 0. Power above 105% of the inverters'
-   maximum AC output is physically impossible and is dropped. Runs of an identical non-zero value lasting
-   an hour or more (a frozen logger) are dropped.
+   maximum AC output is physically impossible and is dropped. Runs of an identical
+   non-zero value lasting an hour or more (a frozen logger) are dropped.
 4. Average to hours labelled by hour end, to match the weather data. An hour needs
    75% of its samples, otherwise it is missing. Target values are never filled in.
 
@@ -43,8 +43,14 @@ class Ledger:
 
     def add(self, stage: str, rule: str, count: int, unit: str, detail: str = "") -> None:
         self.rows.append(
-            {"site": self.site, "stage": stage, "rule": rule, "count": int(count),
-             "unit": unit, "detail": detail}
+            {
+                "site": self.site,
+                "stage": stage,
+                "rule": rule,
+                "count": int(count),
+                "unit": unit,
+                "detail": detail,
+            }
         )
 
     def frame(self) -> pd.DataFrame:
@@ -64,8 +70,13 @@ def to_utc(s: pd.Series, tz: str, ledger: Ledger, stage: str) -> pd.Series:
     local = s.index.tz_localize(tz, ambiguous="NaT", nonexistent="NaT")
     bad = local.isna()
     if bad.any():
-        ledger.add(stage, "timestamp ambiguous or nonexistent in local clock; dropped",
-                   int(bad.sum()), "samples", tz)
+        ledger.add(
+            stage,
+            "timestamp ambiguous or nonexistent in local clock; dropped",
+            int(bad.sum()),
+            "samples",
+            tz,
+        )
     out = pd.Series(s.to_numpy()[~bad], index=local[~bad].tz_convert("UTC"), name=s.name)
     return out[~out.index.duplicated(keep="first")]
 
@@ -115,16 +126,26 @@ def align_clock(s: pd.Series, longitude: float, ledger: Ledger, stage: str) -> p
     if steps:
         s = s.copy()
         s.index = s.index - steps * step
-        ledger.add(stage, "clock shifted to match solar noon", int(s.notna().sum()), "samples",
-                   f"median residual {resid_h:+.2f} h; shifted by {-steps * step}")
+        ledger.add(
+            stage,
+            "clock shifted to match solar noon",
+            int(s.notna().sum()),
+            "samples",
+            f"median residual {resid_h:+.2f} h; shifted by {-steps * step}",
+        )
     monthly = (r - steps * step.total_seconds() / 3600).groupby(r.index.to_period("M")).median()
     bad_months = monthly[monthly.abs() > CLOCK_TOLERANCE_H]
     for m in bad_months.index:
         in_month = (s.index + pd.Timedelta(hours=longitude / 15.0)).tz_convert(None).to_period(
-            "M") == m
-        ledger.add(stage, "month whose clock disagrees with the sun by more than 0.75 h; dropped",
-                   int(np.count_nonzero(in_month)), "samples",
-                   f"{m}: residual {bad_months[m]:+.2f} h")
+            "M"
+        ) == m
+        ledger.add(
+            stage,
+            "month whose clock disagrees with the sun by more than 0.75 h; dropped",
+            int(np.count_nonzero(in_month)),
+            "samples",
+            f"{m}: residual {bad_months[m]:+.2f} h",
+        )
         s = s[~in_month]
     return s
 
@@ -146,12 +167,18 @@ def qc_power(s: pd.Series, ac_max_kw: float, ledger: Ledger) -> pd.Series:
     ledger.add("power", "negative power (night tare) set to 0", int(neg.sum()), "samples")
     s[neg] = 0.0
     over = s > OVER_CAPACITY * ac_max_kw
-    ledger.add("power", "above 105% of maximum AC output; dropped", int(over.sum()), "samples",
-               f"limit {OVER_CAPACITY * ac_max_kw:.0f} kW")
+    ledger.add(
+        "power",
+        "above 105% of maximum AC output; dropped",
+        int(over.sum()),
+        "samples",
+        f"limit {OVER_CAPACITY * ac_max_kw:.0f} kW",
+    )
     s[over] = np.nan
     stuck = stuck_mask(s, STUCK_MINUTES)
-    ledger.add("power", "identical non-zero value for 60 min or more; dropped",
-               int(stuck.sum()), "samples")
+    ledger.add(
+        "power", "identical non-zero value for 60 min or more; dropped", int(stuck.sum()), "samples"
+    )
     s[stuck] = np.nan
     return s
 
@@ -175,8 +202,13 @@ def combine(parts: list[pd.Series], ledger: Ledger, stage: str) -> pd.Series:
         if len(both):
             a, b = s.reindex(both), nxt.reindex(both)
             differ = ~np.isclose(a, b, rtol=1e-6, atol=1e-6, equal_nan=True)
-            ledger.add(stage, "overlapping timestamps across files; first file kept",
-                       len(both), "samples", f"{int(differ.sum())} differ")
+            ledger.add(
+                stage,
+                "overlapping timestamps across files; first file kept",
+                len(both),
+                "samples",
+                f"{int(differ.sum())} differ",
+            )
         s = pd.concat([s, nxt[~nxt.index.isin(s.index)]]).sort_index()
     return s
 
@@ -188,8 +220,9 @@ def clean_power(site: Site, ledger: Ledger) -> pd.DataFrame:
         ledger.add("power", "raw samples read", int(raw.notna().sum()), "samples", Path(f.key).name)
         missing = raw.isna()
         if missing.any():
-            ledger.add("power", "sample missing in source", int(missing.sum()), "samples",
-                       Path(f.key).name)
+            ledger.add(
+                "power", "sample missing in source", int(missing.sum()), "samples", Path(f.key).name
+            )
         parts.append(to_utc(raw, f.tz, ledger, "power"))
     s = combine(parts, ledger, "power")
     s = align_clock(s, site.longitude, ledger, "power")
@@ -232,7 +265,8 @@ def clean_site(site: Site) -> pd.DataFrame:
     d = RAW / site.key
     for src in ("nwp_gfs", "nwp_ecmwf"):
         read_weather(d / f"{src}.json", "_previous_day1").to_parquet(
-            INTERIM / f"{site.key}_{src}.parquet")
+            INTERIM / f"{site.key}_{src}.parquet"
+        )
     read_weather(d / "era5.json", "").to_parquet(INTERIM / f"{site.key}_era5.parquet")
     return ledger.frame()
 

@@ -106,18 +106,30 @@ SITES: dict[str, Site] = {
         end="2025-12-31",
         tz="America/Los_Angeles",
         pv_files=(
-            PvFile("2107_OEDI/data/2107_meter_15m_data_2024.csv",
-                   ("meter_revenue_grade_ac_output_meter_149578",), "America/Los_Angeles"),
-            PvFile("2107_OEDI/data/2107_meter_15m_data_2025.csv",
-                   ("meter_revenue_grade_ac_output_meter_149578",), "America/Los_Angeles"),
+            PvFile(
+                "2107_OEDI/data/2107_meter_15m_data_2024.csv",
+                ("meter_revenue_grade_ac_output_meter_149578",),
+                "America/Los_Angeles",
+            ),
+            PvFile(
+                "2107_OEDI/data/2107_meter_15m_data_2025.csv",
+                ("meter_revenue_grade_ac_output_meter_149578",),
+                "America/Los_Angeles",
+            ),
         ),
         # The 2025 irradiance file is labelled UTC but follows Pacific standard time
         # (no daylight saving) until 2025-12; see clean.py and the paper's data section.
         irradiance_files=(
-            PvFile("2107_OEDI/data/2107_irradiance_data_2024.csv",
-                   ("poa_irradiance_o_149574",), "America/Los_Angeles"),
-            PvFile("2107_OEDI/data/2107_irradiance_15m_data_2025.csv",
-                   ("poa_irradiance_o_149574",), "Etc/GMT+8"),
+            PvFile(
+                "2107_OEDI/data/2107_irradiance_data_2024.csv",
+                ("poa_irradiance_o_149574",),
+                "America/Los_Angeles",
+            ),
+            PvFile(
+                "2107_OEDI/data/2107_irradiance_15m_data_2025.csv",
+                ("poa_irradiance_o_149574",),
+                "Etc/GMT+8",
+            ),
         ),
         notes="Fixed ground mount, Sacramento Valley floor.",
     ),
@@ -146,14 +158,18 @@ SITES: dict[str, Site] = {
         # The site's revenue meter is unusable in this period (values above 16 MW in
         # 2024-08/09, near zero 2024-10 to 2024-12), so the two inverters' AC power is summed.
         pv_files=(
-            PvFile("9068_OEDI/data/9068_ac_power_data_20240101_20250430.csv",
-                   ("inverter_1_ac_power_(kw)_inv_150143", "inverter_2_ac_power_(kw)_inv_150144"),
-                   "America/Denver"),
+            PvFile(
+                "9068_OEDI/data/9068_ac_power_data_20240101_20250430.csv",
+                ("inverter_1_ac_power_(kw)_inv_150143", "inverter_2_ac_power_(kw)_inv_150144"),
+                "America/Denver",
+            ),
         ),
         irradiance_files=(
-            PvFile("9068_OEDI/data/9068_irradiance_data_20240101_20250430.csv",
-                   ("pyranometer_(class_a)_pad_1_poa_irradiance_(w/m2)_o_149723",),
-                   "America/Denver"),
+            PvFile(
+                "9068_OEDI/data/9068_irradiance_data_20240101_20250430.csv",
+                ("pyranometer_(class_a)_pad_1_poa_irradiance_(w/m2)_o_149723",),
+                "America/Denver",
+            ),
         ),
         notes="Single-axis tracker, high plains east of the Front Range.",
     ),

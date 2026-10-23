@@ -50,8 +50,12 @@ def physical_calibrated(train: pd.DataFrame, test: pd.DataFrame) -> np.ndarray:
     return a * test["p_phys_n"].to_numpy() + b
 
 
-def gbm(train: pd.DataFrame, test: pd.DataFrame, objective: str = "regression",
-        alpha: float | None = None) -> np.ndarray:
+def gbm(
+    train: pd.DataFrame,
+    test: pd.DataFrame,
+    objective: str = "regression",
+    alpha: float | None = None,
+) -> np.ndarray:
     t = trainable(train)
     params = dict(GBM_PARAMS, objective=objective)
     if alpha is not None:

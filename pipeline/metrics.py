@@ -46,8 +46,14 @@ def day_blocks(days: pd.Series) -> np.ndarray:
     return ((days - d0).dt.days // BLOCK_DAYS).to_numpy()
 
 
-def bootstrap_skill(y: np.ndarray, f: np.ndarray, ref: np.ndarray, days: pd.Series,
-                    reps: int = BOOTSTRAP_REPS, seed: int = SEED) -> tuple[float, float]:
+def bootstrap_skill(
+    y: np.ndarray,
+    f: np.ndarray,
+    ref: np.ndarray,
+    days: pd.Series,
+    reps: int = BOOTSTRAP_REPS,
+    seed: int = SEED,
+) -> tuple[float, float]:
     """95% interval for the skill score, resampling whole 7-day blocks with replacement."""
     blocks = day_blocks(days)
     ids, inv = np.unique(blocks, return_inverse=True)
@@ -62,8 +68,14 @@ def bootstrap_skill(y: np.ndarray, f: np.ndarray, ref: np.ndarray, days: pd.Seri
     return float(lo), float(hi)
 
 
-def bootstrap_diff(y: np.ndarray, a: np.ndarray, b: np.ndarray, days: pd.Series,
-                   reps: int = BOOTSTRAP_REPS, seed: int = SEED) -> tuple[float, float]:
+def bootstrap_diff(
+    y: np.ndarray,
+    a: np.ndarray,
+    b: np.ndarray,
+    days: pd.Series,
+    reps: int = BOOTSTRAP_REPS,
+    seed: int = SEED,
+) -> tuple[float, float]:
     """95% interval for RMSE(a) - RMSE(b), same block resampling."""
     blocks = day_blocks(days)
     ids, inv = np.unique(blocks, return_inverse=True)

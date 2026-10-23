@@ -65,8 +65,13 @@ def weather_urls(site: Site) -> dict[str, str]:
     common = {"latitude": site.latitude, "longitude": site.longitude, "timezone": "UTC"}
     urls = {}
     for key, model in NWP_MODELS.items():
-        q = dict(common, start_date=start, end_date=end, models=model,
-                 hourly=",".join(f"{v}_previous_day1" for v in WEATHER_VARS))
+        q = dict(
+            common,
+            start_date=start,
+            end_date=end,
+            models=model,
+            hourly=",".join(f"{v}_previous_day1" for v in WEATHER_VARS),
+        )
         urls[f"nwp_{key}.json"] = f"{PREVIOUS_RUNS_API}?{urlencode(q)}"
     q = dict(common, start_date=start, end_date=end, models="era5", hourly=",".join(WEATHER_VARS))
     urls["era5.json"] = f"{ARCHIVE_API}?{urlencode(q)}"

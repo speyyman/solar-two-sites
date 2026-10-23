@@ -47,19 +47,33 @@ def sun(site: Site, index: pd.DatetimeIndex) -> pd.DataFrame:
 def orientation(site: Site, s: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
     if not site.tracking:
         n = len(s)
-        return (pd.Series(np.full(n, site.tilt), index=s.index),
-                pd.Series(np.full(n, site.azimuth), index=s.index))
+        return (
+            pd.Series(np.full(n, site.tilt), index=s.index),
+            pd.Series(np.full(n, site.azimuth), index=s.index),
+        )
     tr = pvlib.tracking.singleaxis(
-        s["apparent_zenith"], s["azimuth"], axis_tilt=0.0, axis_azimuth=180.0,
-        max_angle=MAX_TRACKER_ANGLE, backtrack=True, gcr=site.gcr,
+        s["apparent_zenith"],
+        s["azimuth"],
+        axis_tilt=0.0,
+        axis_azimuth=180.0,
+        max_angle=MAX_TRACKER_ANGLE,
+        backtrack=True,
+        gcr=site.gcr,
     )
     tilt = tr["surface_tilt"].fillna(0.0)
     az = tr["surface_azimuth"].fillna(180.0)
     return tilt, az
 
 
-def ac_power(site: Site, s: pd.DataFrame, ghi: pd.Series, dni: pd.Series, dhi: pd.Series,
-             temp_air: pd.Series, wind_ms: pd.Series) -> pd.Series:
+def ac_power(
+    site: Site,
+    s: pd.DataFrame,
+    ghi: pd.Series,
+    dni: pd.Series,
+    dhi: pd.Series,
+    temp_air: pd.Series,
+    wind_ms: pd.Series,
+) -> pd.Series:
     """AC power in kW for the given hour-mean irradiance and weather."""
     up = s["zenith"] < 90
     ghi = ghi.where(up, 0.0).clip(lower=0)
@@ -67,8 +81,15 @@ def ac_power(site: Site, s: pd.DataFrame, ghi: pd.Series, dni: pd.Series, dhi: p
     dni = dni.where(up, 0.0).clip(lower=0, upper=1100)
     tilt, az = orientation(site, s)
     poa = pvlib.irradiance.get_total_irradiance(
-        tilt, az, s["apparent_zenith"], s["azimuth"], dni, ghi, dhi,
-        dni_extra=s["dni_extra"], model="haydavies",
+        tilt,
+        az,
+        s["apparent_zenith"],
+        s["azimuth"],
+        dni,
+        ghi,
+        dhi,
+        dni_extra=s["dni_extra"],
+        model="haydavies",
     )
     aoi = pvlib.irradiance.aoi(tilt, az, s["apparent_zenith"], s["azimuth"])
     iam = pvlib.iam.physical(aoi).fillna(0.0)
@@ -84,6 +105,12 @@ def ac_power(site: Site, s: pd.DataFrame, ghi: pd.Series, dni: pd.Series, dhi: p
 def clear_sky_power(site: Site, s: pd.DataFrame) -> pd.Series:
     """AC power under clear sky at 20 C and 1 m/s wind: the denominator of smart persistence."""
     n = len(s)
-    return ac_power(site, s, s["ghi_cs"], s["dni_cs"], s["dhi_cs"],
-                    pd.Series(np.full(n, 20.0), index=s.index),
-                    pd.Series(np.full(n, 1.0), index=s.index))
+    return ac_power(
+        site,
+        s,
+        s["ghi_cs"],
+        s["dni_cs"],
+        s["dhi_cs"],
+        pd.Series(np.full(n, 20.0), index=s.index),
+        pd.Series(np.full(n, 1.0), index=s.index),
+    )
