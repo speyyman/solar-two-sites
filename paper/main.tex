@@ -1,7 +1,6 @@
 \documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[letterpaper,margin=1in,headheight=14pt]{geometry}
+\usepackage{libertinus}
 \usepackage{microtype}
 \usepackage{amsmath}
 \usepackage{booktabs}
@@ -10,30 +9,75 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[hidelinks]{hyperref}
 \usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
 \captionsetup{font=small,labelfont=bf}
+\urlstyle{same}
 \graphicspath{{../figures/}}
 
 \input{generated/numbers.tex}
+\input{doi.tex}
 
-\newcommand{\paperversion}{v1}
+\newcommand{\paperversion}{1.0}
 \newcommand{\paperdate}{23 October 2026}
 
-\title{How much of a solar forecast is skill?\\
-\large A two-site day-ahead study with public data}
-\author{Saeed Peyman\\
-\small Independent\\
-\small \href{mailto:saeeeed@duck.com}{saeeeed@duck.com}}
-\date{\small Working paper \paperversion, \paperdate. Not peer reviewed.\\
-Code: \url{https://github.com/speyyman/solar-two-sites} (MIT). Text and figures: CC BY 4.0.}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{1.6em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+
+\newcommand{\doiref}{\ifx\paperdoi\empty\url{https://speyyman.github.io/research/solar-two-sites/}\else\href{https://doi.org/\paperdoi}{https://doi.org/\paperdoi}\fi}
+
+\fancypagestyle{body}{%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize Peyman \quad How much of a solar forecast is skill?}%
+  \fancyhead[R]{\footnotesize Working paper v\paperversion}%
+  \fancyfoot[L]{\footnotesize\ifx\paperdoi\empty\else\href{https://doi.org/\paperdoi}{doi:\paperdoi}\fi}%
+  \fancyfoot[R]{\footnotesize \thepage\ of \pageref*{LastPage}}%
+  \renewcommand{\headrulewidth}{0.4pt}}
+\fancypagestyle{first}{%
+  \fancyhf{}%
+  \fancyfoot[R]{\footnotesize \thepage\ of \pageref*{LastPage}}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+\hypersetup{pdftitle={How much of a solar forecast is skill? A two-site day-ahead study with public data},
+  pdfauthor={Saeed Peyman}, pdfsubject={Working paper},
+  pdfkeywords={solar forecasting, photovoltaics, day-ahead forecasting, numerical weather prediction, gradient boosting, reproducibility}}
 
 \begin{document}
-\maketitle
+\thispagestyle{first}
+\pagestyle{body}
 
-\begin{abstract}
-\noindent
-Day-ahead forecasts of photovoltaic (PV) output are usually reported as a single error number for one plant. This study asks how much of that number is skill, how much depends on the place, and where the skill runs out. It uses two public plants from the NREL PVDAQ archive in contrasting climates, a \ArbDcKw\,kW fixed-tilt array in Arbuckle, California and a \KerDcKw\,kW single-axis tracker in Kersey, Colorado, and weather forecasts as they were issued a day ahead (GFS and ECMWF IFS, archived by Open-Meteo), with ERA5 reanalysis as a hindsight comparison. Every forecaster is scored on the same daytime hours with a monthly rolling origin: \ArbHours\ hours over \ArbDays\ days at Arbuckle and \KerHours\ hours over \KerDays\ days at Kersey. Against smart persistence (normalised RMSE \ArbSmartNrmse\ and \KerSmartNrmse\ of AC rating), gradient-boosted trees on GFS inputs reach a skill of \ArbGbmSkill\ (95\% block-bootstrap interval \ArbGbmLo\ to \ArbGbmHi) at Arbuckle and \KerGbmSkill\ (\KerGbmLo\ to \KerGbmHi) at Kersey. A physical model with a two-parameter calibration gets most of the way there (\ArbPhysCalSkill\ and \KerPhysCalSkill); at Kersey the trees add nothing measurable over it. Hindsight weather from the reanalysis adds little at Arbuckle (\ArbGbmEraSkill) and somewhat more at Kersey (\KerGbmEraSkill). A model trained on the other site keeps less than half of the gain at Arbuckle (\ArbTransferSkill) and about three quarters at Kersey (\KerTransferSkill). Nominal 80\% intervals cover \ArbCovGfs\% and \KerCovGfs\% of hours. The worst tenth of days carries about a quarter of all absolute error. Read one by one, many of the largest misses are not errors of the weather forecast at all: a plant that produced nothing on two clear days and an inverter offline for a week; a summer of clear, dry days at reduced output may be equipment, soiling or smoke. Days on which the forecast was wrong and the reanalysis right are a minority of the large misses. All data are public, all code is released, and the whole study reruns with one command.
-\end{abstract}
+\noindent{\footnotesize\textsc{Working paper}\hfill Version \paperversion, \paperdate\hfill Not peer reviewed}\par
+\noindent\rule{\textwidth}{0.4pt}
 
+\vspace{1.4em}
+\begin{center}
+{\LARGE\bfseries How much of a solar forecast is skill?\par}
+\vspace{0.5em}
+{\large A two-site day-ahead study with public data\par}
+\vspace{1.4em}
+{\large Saeed Peyman\par}
+\vspace{0.3em}
+{\small Independent researcher, Nashville, Tennessee, United States\\
+\href{mailto:saeeeed@duck.com}{saeeeed@duck.com}\par}
+\end{center}
+
+\vspace{1.2em}
+\noindent\rule{\textwidth}{0.4pt}
+{\small
+\noindent\textbf{Abstract.} Day-ahead forecasts of photovoltaic (PV) output are usually reported as a single error number for one plant. This study asks how much of that number is skill, how much depends on the place, and where the skill runs out. It uses two public plants from the NREL PVDAQ archive in contrasting climates, an \ArbDcKw\,kW fixed-tilt array in Arbuckle, California and a \KerDcKw\,kW single-axis tracker in Kersey, Colorado, and weather forecasts as they were issued a day ahead (GFS and ECMWF IFS, archived by Open-Meteo), with ERA5 reanalysis as a hindsight comparison. Every forecaster is scored on the same daytime hours with a monthly rolling origin: \ArbHours\ hours over \ArbDays\ days at Arbuckle and \KerHours\ hours over \KerDays\ days at Kersey. Against smart persistence (normalised RMSE \ArbSmartNrmse\ and \KerSmartNrmse\ of AC rating), gradient-boosted trees on GFS inputs reach a skill of \ArbGbmSkill\ (95\% block-bootstrap interval \ArbGbmLo\ to \ArbGbmHi) at Arbuckle and \KerGbmSkill\ (\KerGbmLo\ to \KerGbmHi) at Kersey. A physical model with a two-parameter calibration gets most of the way there (\ArbPhysCalSkill\ and \KerPhysCalSkill); at Kersey the trees add nothing measurable over it. Hindsight weather from the reanalysis adds little at Arbuckle (\ArbGbmEraSkill) and somewhat more at Kersey (\KerGbmEraSkill). A model trained on the other site keeps less than half of the gain at Arbuckle (\ArbTransferSkill) and about three quarters at Kersey (\KerTransferSkill). Nominal 80\% intervals cover \ArbCovGfs\% and \KerCovGfs\% of hours. The worst tenth of days carries about a quarter of all absolute error. Read one by one, many of the largest misses are not errors of the weather forecast at all: a plant that produced nothing on two clear days and an inverter offline for a week; a summer of clear, dry days at reduced output may be equipment, soiling or smoke. Days on which the forecast was wrong and the reanalysis right are a minority of the large misses. All data are public, all code is released, and the whole study reruns with one command.
+
+\smallskip
+\noindent\textbf{Keywords:} solar forecasting; photovoltaics; day-ahead forecasting; numerical weather prediction; gradient boosting; forecast verification; reproducibility.\par}
+\noindent\rule{\textwidth}{0.4pt}
+
+{\footnotesize\noindent
+\textbf{Cite as:} Peyman, S. (2026). \emph{How much of a solar forecast is skill? A two-site day-ahead study with public data.} Working paper, version \paperversion. \doiref\\
+\textbf{Code and data pipeline:} \url{https://github.com/speyyman/solar-two-sites} (MIT licence). \textbf{This text and its figures:} CC BY 4.0.\par}
+
+\vspace{0.4em}
 \section{Introduction}
 
 A day-ahead PV forecast is a statement made at the end of one day about every hour of the next. Its value to a grid operator or a plant owner depends on how much better it is than what they could have guessed for free. Published forecasting studies report such comparisons, but often for a single plant, with weather inputs whose provenance is not always clear, and with error figures that combine three different things: how well the weather was forecast, how well weather was turned into power, and how often the plant did something no weather model could know about.
@@ -226,11 +270,19 @@ Error is concentrated: the worst 10\% of days carry \ArbWorstTenAbs\% of all abs
 
 Everything runs from one command, \texttt{python -m pipeline all}: it downloads the raw files (about 30\,MB) and stops if any differs from the committed SHA-256 manifest, cleans the series and writes the ledger, builds the features, runs the rolling-origin evaluation, sorts the failures, draws the figures and writes the macros this paper's numbers are typeset from. A full run takes a few minutes on a laptop. Seeds are fixed and LightGBM runs single-threaded in deterministic mode; a rerun from an empty data folder reproduced every committed result file exactly. Unit tests cover the cleaning rules and metrics, and an end-to-end test on a synthetic plant checks that the pipeline ranks hindsight weather above the forecast and both above smart persistence and that a planted leak is caught. The code is MIT-licensed at \url{https://github.com/speyyman/solar-two-sites}; this text and its figures are CC BY 4.0. Data sources and licences are listed in the repository's \texttt{DATA.md}.
 
+\section*{Declarations}
+
+\paragraph{Data availability.} All data are public. Plant measurements are from the NREL PVDAQ archive on the Open Energy Data Initiative (systems 2107 and 9068, CC BY 4.0). Day-ahead forecasts and reanalysis are from Open-Meteo (CC BY 4.0). The exact queries and a SHA-256 checksum for every downloaded file are recorded in the repository's \texttt{data/manifest.json}; sources and licences are listed in \texttt{DATA.md}.
+
+\paragraph{Code availability.} The full pipeline, from the raw downloads to every number, table and figure in this paper, is at \url{https://github.com/speyyman/solar-two-sites} under the MIT licence\ifx\paperdoi\empty\else, and is archived with this paper at \href{https://doi.org/\paperdoi}{doi:\paperdoi}\fi.
+
+\paragraph{Funding.} This work received no external funding.
+
+\paragraph{Competing interests.} The author declares no competing interests.
+
 \section*{Acknowledgements}
 
-Measured plant data are from the NREL PVDAQ archive on the Open Energy Data Initiative. Weather data are from Open-Meteo, which redistributes NOAA GFS, ECMWF IFS open data and Copernicus ERA5. The author thanks the maintainers of pvlib, LightGBM and the scientific Python stack.
-
-\textbf{AI assistance.} The analysis code and the drafting of this paper were done with Claude (Anthropic), an AI assistant, under the author's direction. The author is responsible for the content.
+Measured plant data are from the NREL PVDAQ archive on the Open Energy Data Initiative. Weather data are from Open-Meteo, which redistributes NOAA GFS, ECMWF IFS open data and Copernicus ERA5. The author thanks the maintainers of pvlib, LightGBM and the scientific Python stack. The analysis code, data pipeline, figures and verification checks were written with Claude (Anthropic), an AI assistant, under the author's direction. The author is responsible for the study and its content.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

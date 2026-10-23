@@ -12,3 +12,4 @@ paper/build/
 *.synctex.gz
 *.egg-info/
 build/
+zenodo/deposit.json
