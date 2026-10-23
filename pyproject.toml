@@ -1,0 +1,43 @@
+[project]
+name = "solar-two-sites"
+version = "1.0.0"
+description = "How much of a day-ahead solar forecast is skill? A two-site study with public data."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Saeed Peyman", email = "saeeeed@duck.com" }]
+dependencies = [
+  "lightgbm==4.7.0",
+  "matplotlib==3.11.2",
+  "numpy==2.5.4",
+  "pandas==3.1.0",
+  "pvlib==0.16.1",
+  "pyarrow==26.0.0",
+  "requests==2.34.2",
+  "scikit-learn==1.9.1",
+  "scipy==1.18.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1", "ruff==0.17.2"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["pipeline"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "ANN"]
+ignore = ["ANN401"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

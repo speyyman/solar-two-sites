@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: solar-two-sites
+Version: 1.0.0
+Summary: How much of a day-ahead solar forecast is skill? A two-site study with public data.
+Author-email: Saeed Peyman <saeeeed@duck.com>
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: lightgbm==4.7.0
+Requires-Dist: matplotlib==3.11.2
+Requires-Dist: numpy==2.5.4
+Requires-Dist: pandas==3.1.0
+Requires-Dist: pvlib==0.16.1
+Requires-Dist: pyarrow==26.0.0
+Requires-Dist: requests==2.34.2
+Requires-Dist: scikit-learn==1.9.1
+Requires-Dist: scipy==1.18.1
+Provides-Extra: dev
+Requires-Dist: pytest==9.1.1; extra == "dev"
+Requires-Dist: ruff==0.17.2; extra == "dev"
