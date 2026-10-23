@@ -168,7 +168,7 @@ Figure~\ref{fig:sky} splits the errors by the day's measured clearness. On clear
 \label{fig:sky}
 \end{figure}
 
-By season (Figure~\ref{fig:monthly}), Arbuckle's summers are easy for every forecaster: in June to August smart persistence scores \ArbJJASmartNrmse\ and the trees \ArbJJAGbmNrmse, a skill of only \ArbJJAGbmSkill. Winter is where forecasting pays: in December to February the same numbers are \ArbDJFSmartNrmse\ and \ArbDJFGbmNrmse, a skill of \ArbDJFGbmSkill. Kersey shows the same pattern with less contrast (summer \KerJJAGbmSkill, winter \KerDJFGbmSkill), and its smart persistence gets steadily worse through the winter and spring of 2025 while the weather-driven forecasts hold steady. Arbuckle's last months of 2025 stand out and are taken up in Section~\ref{sec:failures}.
+By season (Figure~\ref{fig:monthly}), Arbuckle's summers are easy for every forecaster: in June to August smart persistence scores \ArbJJASmartNrmse\ and the trees \ArbJJAGbmNrmse, a skill of only \ArbJJAGbmSkill. Winter is where forecasting pays: in December to February the same numbers are \ArbDJFSmartNrmse\ and \ArbDJFGbmNrmse, a skill of \ArbDJFGbmSkill. Kersey's summer is also weaker than its winter (\KerJJAGbmSkill\ against \KerDJFGbmSkill), but its weakest season is autumn (\KerSONGbmSkill) and its strongest spring (\KerMAMGbmSkill); its smart persistence gets steadily worse through the winter and spring of 2025 while the weather-driven forecasts hold steady. Arbuckle's last months of 2025 stand out and are taken up in Section~\ref{sec:failures}.
 
 \begin{figure}[t]
 \centering
@@ -209,7 +209,7 @@ Error is concentrated: the worst 10\% of days carry \ArbWorstTenAbs\% of all abs
 \label{fig:cases}
 \end{figure}
 
-\paragraph{How much the plant matters.} Removing the plant-anomaly days (\ArbAnomalyDays\ at Arbuckle, \KerAnomalyDays\ at Kersey; the rule uses no forecast) raises the trees' skill from \ArbGbmSkill\ to \ArbSensGbmSkill\ (\ArbSensGbmLo\ to \ArbSensGbmHi) at Arbuckle and from \KerGbmSkill\ to \KerSensGbmSkill\ (\KerSensGbmLo\ to \KerSensGbmHi) at Kersey. A forecast evaluated on a clean plant looks better than one evaluated on a real one, and the difference is about as large as the difference between the physical model and the trees.
+\paragraph{How much the plant matters.} Removing the plant-anomaly days (\ArbAnomalyDays\ at Arbuckle, \KerAnomalyDays\ at Kersey; the rule uses no forecast) raises the trees' skill from \ArbGbmSkill\ to \ArbSensGbmSkill\ (\ArbSensGbmLo\ to \ArbSensGbmHi) at Arbuckle and from \KerGbmSkill\ to \KerSensGbmSkill\ (\KerSensGbmLo\ to \KerSensGbmHi) at Kersey. A forecast evaluated on a clean plant looks better than one evaluated on a real one, and the difference is comparable to what the trees add over the calibrated physical model at Arbuckle.
 
 \section{Limitations}
 

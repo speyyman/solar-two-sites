@@ -189,9 +189,11 @@ def fig_monthly(m: dict, t: Theme) -> None:
         )
         ax.set_title(SITE_NAMES[key], loc="left", fontsize=9)
     axes[0].set_ylabel("Monthly RMSE, fraction of AC")
-    axes[0].set_ylim(bottom=0)
-    axes[0].legend(loc="upper left", fontsize=7.5)
-    fig.tight_layout()
+    axes[0].set_ylim(0, 0.34)
+    # Legend under the panels, so it never sits on a line.
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=3, fontsize=7.5)
+    fig.tight_layout(rect=(0, 0.08, 1, 1))
     save(fig, "monthly", t)
 
 
