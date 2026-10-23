@@ -1,6 +1,0 @@
-pyproject.toml
-solar_two_sites.egg-info/PKG-INFO
-solar_two_sites.egg-info/SOURCES.txt
-solar_two_sites.egg-info/dependency_links.txt
-solar_two_sites.egg-info/requires.txt
-solar_two_sites.egg-info/top_level.txt

@@ -10,3 +10,5 @@ paper/build/
 *.log
 *.out
 *.synctex.gz
+*.egg-info/
+build/
