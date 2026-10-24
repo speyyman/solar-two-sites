@@ -66,4 +66,4 @@ Archived on Zenodo with the paper: [doi:10.5281/zenodo.23604923](https://doi.org
 
 > Peyman, S. (2026). *How much of a solar forecast is skill? A two-site day-ahead study with public data.* Working paper, version 1.0. Zenodo. https://doi.org/10.5281/zenodo.23604923
 
-The analysis code, data pipeline, figures and verification checks were written with Claude (Anthropic) under the author's direction.
+Development was assisted by Claude (Anthropic).
